@@ -5,19 +5,19 @@
 
 ![Midpoint Radar Chart](sample-data/midpoint-shell.png)
 
-This is a personal interactive visualization tool I built to quickly plot and compare openLCA midpoint and endpoint projections. It takes standard openLCA Excel outputs and generates cleaner, publication-ready radar charts (using the `scienceplots` Matplotlib style) to aid in comparative Life Cycle Assessments (LCAs).
+This is a personal interactive visualization tool I built to quickly plot and compare [openLCA's](https://www.openlca.org/) midpoint and endpoint projections. It takes standard openLCA Excel outputs and generates cleaner, publication-ready radar charts (using the `scienceplots` Matplotlib style) to aid in comparative Life Cycle Assessments (LCAs).
 
 ## Motivation
 
-I originally developed this as a set of static Python automation scripts for my own technical LCA workflows. To make the pipeline more transparent, interactive, and easier to showcase, I refactored the core data processing logic and built this Streamlit front-end. 
+I originally developed this as a set of static Python automation scripts for my own technical LCA workflows. To make the pipeline more transparent, interactive, and easier to showcase, I refactored the core data processing logic and built this [Streamlit](https://streamlit.io/) front-end. 
 
 ## Features
 
 - **Automated Data Processing**: Effortlessly parses and aligns impact categories from multiple `.xlsx` scenario exports.
-- **Midpoint & Endpoint Support**: Features dedicated logic and dictionary mappings for interpreting ReCiPe 2016 (or similar) midpoint and endpoint impact abbreviations.
+- **Midpoint & Endpoint Support**: Features dedicated logic and dictionary mappings for interpreting [ReCiPe 2016](https://www.rivm.nl/en/life-cycle-assessment-lca/recipe) midpoint and endpoint impact abbreviations.
 - **Comparative Radar Charts**: Overlays multiple scenarios on dynamic radar charts.
-- **Scientific Styling**: The charts are formatted according to rigorous scientific standards using the `scienceplots` Matplotlib theme, avoiding the generic defaults typical of automated plotters.
-- **Responsive UI**: Built on Streamlit, the app offers fully customizable visualization parameters (figure sizing, rotation offsets, category filtering) and SVG export options.
+- **Scientific Styling**: The charts are formatted according to [SciencePlots](https://github.com/garrettj403/SciencePlots) Matplotlib theme.
+- **Other Features**: The app offers fully customizable visualization parameters (figure sizing, rotation offsets, category filtering) and SVG export options.
 
 ## How It Works
 
@@ -33,7 +33,7 @@ I originally developed this as a set of static Python automation scripts for my 
 pip install -r requirements.txt
 ```
 
-**Using Nix Flakes (recommended for reproducible environments):**
+**Using Nix Flakes:**
 ```bash
 nix develop
 ```
