@@ -5,7 +5,7 @@
 
 ![Midpoint Radar Chart](sample-data/midpoint-shell.png)
 
-This is a personal interactive visualization tool I built to quickly plot and compare [openLCA's](https://www.openlca.org/) midpoint and endpoint projections. It takes standard openLCA Excel outputs and generates cleaner, publication-ready radar charts (using the `scienceplots` Matplotlib style) to aid in comparative Life Cycle Assessments (LCAs).
+This is a personal interactive visualization tool I built to quickly plot and compare [openLCA's](https://www.openlca.org/) midpoint and endpoint projections. It takes standard openLCA Excel outputs and generates cleaner, radar charts to aid in comparative Life Cycle Assessments (LCAs).
 
 ## Motivation
 
