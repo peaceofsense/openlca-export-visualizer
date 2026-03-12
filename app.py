@@ -3,7 +3,7 @@ LCA Midpoint and Endpoint Impact Assessment - Radar Chart Visualizer
 Streamlit app to interactively explore openLCA impact assessment exports.
 
 Usage:
-    streamlit run test.py
+    streamlit run app.py
 
 Input:
     - Upload one or more openLCA Excel exports
