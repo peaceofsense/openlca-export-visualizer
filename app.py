@@ -17,8 +17,13 @@ from math import pi
 
 import pandas as pd
 import streamlit as st
-
-from data_processing import IMPACT_LABELS, ENDPOINT_IMPACT_LABELS, build_combined, load_excel, normalize
+from data_processing import (
+    ENDPOINT_IMPACT_LABELS,
+    IMPACT_LABELS,
+    build_combined,
+    load_excel,
+    normalize,
+)
 from plotting import plot_radar
 
 # ── Page config ───────────────────────────────────────────────────────────────
@@ -64,6 +69,17 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+with st.expander("ℹ️ How to use"):
+    st.markdown("""
+    1. Export your results from openLCA as Excel (`.xlsx`) — midpoint or endpoint
+    2. Upload one or more files to compare scenarios on the same radar chart
+    3. Adjust visualization parameters as needed and export as SVG
+
+    The app expects a sheet named **`Impacts`** with standard ReCiPe 2016 headers.
+    [View source on GitHub](https://github.com/peaceofsense/openlca-export-visualizer)
+    """)
+
+
 # ── Helper for rendering a radar tab ──────────────────────────────────────────
 def render_radar_tab(tab_name, labels_dict, key_prefix):
     # ── Upload (collapsible) ──────────────────────────────────────────────────
@@ -74,7 +90,7 @@ def render_radar_tab(tab_name, labels_dict, key_prefix):
             accept_multiple_files=True,
             help="Each file must contain a sheet named 'Impacts'.",
             label_visibility="collapsed",
-            key=f"{key_prefix}_uploader"
+            key=f"{key_prefix}_uploader",
         )
 
     if not uploaded_files:
@@ -110,11 +126,11 @@ def render_radar_tab(tab_name, labels_dict, key_prefix):
     all_cats_raw = set()
     for df in dfs.values():
         all_cats_raw.update(df["Impact category clean"].dropna().unique().tolist())
-        
+
     # Remove redundant categories if a "total: " version also exists
     to_remove = {c for c in all_cats_raw if f"total: {c}" in all_cats_raw}
     all_cats_raw -= to_remove
-    
+
     all_cats_sorted = sorted(all_cats_raw)
 
     # ── Two-column layout: settings (left) | chart (right) ───────────────────
@@ -129,28 +145,43 @@ def render_radar_tab(tab_name, labels_dict, key_prefix):
                 options=list(dfs.keys()),
                 default=list(dfs.keys()),
                 label_visibility="collapsed",
-                key=f"{key_prefix}_scenarios"
+                key=f"{key_prefix}_scenarios",
             )
 
         with st.expander("Impact categories", expanded=True):
             # Only select the first 3 categories by default if there are enough
-            default_categories_selection = all_cats_sorted[:3] if len(all_cats_sorted) >= 3 else all_cats_sorted
+            default_categories_selection = (
+                all_cats_sorted[:3] if len(all_cats_sorted) >= 3 else all_cats_sorted
+            )
             selected_categories = st.multiselect(
                 "Select categories",
                 options=all_cats_sorted,
                 default=default_categories_selection,
                 format_func=lambda c: f"{labels_dict.get(c, c)}  —  {c}",
                 label_visibility="collapsed",
-                key=f"{key_prefix}_categories"
+                key=f"{key_prefix}_categories",
             )
 
         st.markdown("---")
         angle_offset_deg = st.slider(
-            "Angle offset (°)", min_value=0, max_value=360, value=45 if "Midpoint" in tab_name else 90, step=5,
-            key=f"{key_prefix}_angle"
+            "Angle offset (°)",
+            min_value=0,
+            max_value=360,
+            value=45 if "Midpoint" in tab_name else 90,
+            step=5,
+            key=f"{key_prefix}_angle",
         )
-        fig_size = st.slider("Figure size", min_value=3.0, max_value=8.0, value=4.0, step=0.2, key=f"{key_prefix}_size")
-        chart_title = st.text_input("Chart title (optional)", value="", key=f"{key_prefix}_title")
+        fig_size = st.slider(
+            "Figure size",
+            min_value=3.0,
+            max_value=8.0,
+            value=4.0,
+            step=0.2,
+            key=f"{key_prefix}_size",
+        )
+        chart_title = st.text_input(
+            "Chart title (optional)", value="", key=f"{key_prefix}_title"
+        )
 
     # ── Chart ─────────────────────────────────────────────────────────────────
     with col_chart:
@@ -173,7 +204,7 @@ def render_radar_tab(tab_name, labels_dict, key_prefix):
             angle_offset=angle_offset_rad,
             figsize=(fig_size, fig_size),
             title=chart_title,
-            labels_dict=labels_dict
+            labels_dict=labels_dict,
         )
 
         if fig:
@@ -190,7 +221,7 @@ def render_radar_tab(tab_name, labels_dict, key_prefix):
                 data=buf.getvalue(),
                 file_name=f"lca_{tab_name.lower()}_radar.svg",
                 mime="image/svg+xml",
-                key=f"{key_prefix}_dl"
+                key=f"{key_prefix}_dl",
             )
 
     # ── Data tables ───────────────────────────────────────────────────────────
@@ -231,6 +262,7 @@ def render_radar_tab(tab_name, labels_dict, key_prefix):
         Technical names are mapped to standard LCA abbreviations
         using a predefined dictionary for {tab_name} to keep the radar chart legible.
         """)
+
 
 # ── Tabs (extend here later: Endpoint, Sankey, …) ────────────────────────────
 tab_midpoint, tab_endpoint = st.tabs(["Midpoint · Radar", "Endpoint · Radar"])
