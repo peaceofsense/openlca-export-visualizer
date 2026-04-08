@@ -6,15 +6,13 @@
 
 ![Midpoint Radar Chart](sample-data/midpoint-shell.png)
 
-An interactive visualization tool for comparing openLCA midpoint and endpoint impact results across multiple scenarios. Takes standard openLCA Excel exports and generates publication-ready radar charts for comparative Life Cycle Assessments.
+An interactive visualization tool for comparing openLCA midpoint and endpoint impact results across multiple scenarios. Takes standard openLCA Excel exports and generates high quality radar charts for comparative Life Cycle Assessments.
 
 ---
 
 ## Background
 
-This tool was originally developed to support LCA workflows within the **[ESM-Regio project](https://www.esm-regio.de/)** — a research initiative funded by the **German Federal Ministry of Economic Affairs and Climate Action (BMWK)** — where it was used to generate comparative environmental scenario visualizations across heating, electricity, and transport pathways for district-level energy planning in Germany. The static automation pipeline was later refactored into this interactive Streamlit application to make the methodology transparent, reproducible, and accessible to other LCA practitioners.
-
-Results produced with this tool were presented at the official ESM-Regio project review (November 2024), covering multi-scenario ReCiPe 2016 midpoint and endpoint comparisons across five national energy scenarios (2019 baseline through NEP23 2045).
+This tool was originally developed to support LCA workflows within the **[ESM-Regio project](https://www.bayern-innovativ.de/en/emagazine/detail/esm-regio-model-project-optimization-of-the-energy-system-via-sector-coupling)** — a research initiative funded by the **German Federal Ministry of Economic Affairs and Climate Action (BMWK)** — where it was used to generate comparative environmental scenario visualizations across heating, electricity, and transport pathways for district-level energy planning in Germany. The static automation pipeline was later refactored into this interactive Streamlit application to make the methodology transparent, reproducible, and accessible to other LCA practitioners.
 
 ---
 
