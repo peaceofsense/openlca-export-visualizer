@@ -12,7 +12,7 @@ An interactive visualization tool for comparing openLCA midpoint and endpoint im
 
 ## Background
 
-This tool was originally developed to support LCA workflows within the **[ESM-Regio project](https://www.bayern-innovativ.de/en/emagazine/detail/esm-regio-model-project-optimization-of-the-energy-system-via-sector-coupling)** — a research initiative funded by the **German Federal Ministry of Economic Affairs and Climate Action (BMWK)** — where it was used to generate comparative environmental scenario visualizations across heating, electricity, and transport pathways for district-level energy planning in Germany. The static automation pipeline was later refactored into this interactive Streamlit application to make the methodology transparent, reproducible, and accessible to other LCA practitioners.
+This tool was originally developed to support LCA workflows within the **[ESM-Regio project](https://www.bayern-innovativ.de/en/emagazine/detail/esm-regio-model-project-optimization-of-the-energy-system-via-sector-coupling)** - a research initiative funded by the **German Federal Ministry of Economic Affairs and Climate Action (BMWK)** - where it was used to generate comparative environmental scenario visualizations across heating, electricity, and transport pathways for district-level energy planning in Germany. The static automation pipeline was later refactored into this interactive Streamlit application to make the methodology transparent, reproducible, and accessible to other LCA practitioners.
 
 ---
 
