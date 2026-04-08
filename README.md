@@ -2,50 +2,80 @@
 
 ![openLCA](https://img.shields.io/badge/openLCA-2.0+-green.svg)
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 
 ![Midpoint Radar Chart](sample-data/midpoint-shell.png)
 
-This is a personal interactive visualization tool I built to quickly plot and compare [openLCA's](https://www.openlca.org/) midpoint and endpoint projections. It takes standard openLCA Excel outputs and generates cleaner, radar charts to aid in comparative Life Cycle Assessments (LCAs).
+An interactive visualization tool for comparing openLCA midpoint and endpoint impact results across multiple scenarios. Takes standard openLCA Excel exports and generates publication-ready radar charts for comparative Life Cycle Assessments.
 
-## Motivation
+---
 
-I originally developed this as a set of static Python automation scripts for my own technical LCA workflows. To make the pipeline more transparent, interactive, and easier to showcase, I refactored the core data processing logic and built this [Streamlit](https://streamlit.io/) front-end. 
+## Background
+
+This tool was originally developed to support LCA workflows within the **[ESM-Regio project](https://www.esm-regio.de/)** — a research initiative funded by the **German Federal Ministry of Economic Affairs and Climate Action (BMWK)** — where it was used to generate comparative environmental scenario visualizations across heating, electricity, and transport pathways for district-level energy planning in Germany. The static automation pipeline was later refactored into this interactive Streamlit application to make the methodology transparent, reproducible, and accessible to other LCA practitioners.
+
+Results produced with this tool were presented at the official ESM-Regio project review (November 2024), covering multi-scenario ReCiPe 2016 midpoint and endpoint comparisons across five national energy scenarios (2019 baseline through NEP23 2045).
+
+---
 
 ## Features
 
-- **Automated Data Processing**: Effortlessly parses and aligns impact categories from multiple `.xlsx` scenario exports.
-- **Midpoint & Endpoint Support**: Features dedicated logic and dictionary mappings for interpreting [ReCiPe 2016](https://www.rivm.nl/en/life-cycle-assessment-lca/recipe) midpoint and endpoint impact abbreviations.
-- **Comparative Radar Charts**: Overlays multiple scenarios on dynamic radar charts.
-- **Scientific Styling**: The charts are formatted according to [SciencePlots](https://github.com/garrettj403/SciencePlots) Matplotlib theme.
-- **Other Features**: The app offers fully customizable visualization parameters (figure sizing, rotation offsets, category filtering) and SVG export options.
+- **Automated Data Processing**: Parses and aligns impact categories from multiple `.xlsx` scenario exports in a single upload step.
+- **Midpoint & Endpoint Support**: Dedicated logic and dictionary mappings for [ReCiPe 2016](https://www.rivm.nl/en/life-cycle-assessment-lca/recipe) midpoint and endpoint impact abbreviations.
+- **Comparative Radar Charts**: Overlays multiple scenarios on dynamic radar charts for direct visual comparison.
+- **Scientific Styling**: Charts formatted according to the [SciencePlots](https://github.com/garrettj403/SciencePlots) Matplotlib theme for publication-ready output.
+- **Flexible Configuration**: Customizable figure sizing, rotation offsets, and category filtering.
+- **SVG Export**: Vector-format export for use in reports and presentations.
+
+---
 
 ## How It Works
 
-1. **Extraction**: `app.py` accepts one or more openLCA Excel files and triggers `data_processing.py`, reading from the `Impacts` sheet and targeting row 2 for standard headers.
-2. **Standardization**: Redundant category variations are removed, and complex technical names are mapped via dictionaries to standard, readable LCA abbreviations.
-3. **Normalization**: Max-Normalization is applied column-wise across the selected scenarios so that disparate metrics (eg: kg CO2 eq vs m3 water) can be plotted on the same relative axis: $x_{norm} = \frac{x_{raw}}{\text{max}(X_{category})}$.
-4. **Drawing**: `plotting.py` uses Matplotlib with an imposed scientific aesthetic to generate circular polygon plots, scaling dynamically to the input selections.
+1. **Extraction**: `app.py` accepts one or more openLCA Excel files and triggers `data_processing.py`, reading from the `Impacts` sheet with row 2 as the standard header row.
+2. **Standardization**: Redundant category variations are removed; complex technical names are mapped via dictionaries to standard ReCiPe abbreviations (e.g. `GWP100`, `FETP`, `HTPc`).
+3. **Normalization**: Max-normalization is applied column-wise across scenarios so that disparate units (e.g. kg CO₂-eq vs. m³ water) can be compared on a shared relative axis:
+
+$$x_{norm} = \frac{x_{raw}}{\max(X_{category})}$$
+
+4. **Drawing**: `plotting.py` uses Matplotlib with a scientific aesthetic to generate circular polygon plots, scaling dynamically to the number of scenarios and categories selected.
+
+---
+
+## Input Format
+
+The tool expects standard openLCA Excel exports (`.xlsx`). Each file should contain an `Impacts` sheet where:
+- **Row 2** contains the column headers (impact category names)
+- **Subsequent rows** contain numerical impact values per scenario
+
+Multiple files can be uploaded simultaneously for cross-scenario comparison. No preprocessing is required.
+
+---
 
 ## Installation
 
 **Using pip:**
 ```bash
 pip install -r requirements.txt
+streamlit run app.py
 ```
 
 **Using Nix Flakes:**
 ```bash
 nix develop
-```
-
-
-
-Simply run the Streamlit app locally:
-
-```bash
 streamlit run app.py
 ```
 
+---
+
+## Use Cases
+
+- Comparing decarbonization scenarios in energy system studies
+- Identifying environmental hotspots across product or process pathways
+- Generating radar chart outputs for LCA reports and academic presentations
+- Rapid visual sanity-checking of openLCA model outputs during iterative modelling
+
+---
+
 ## License
 
-This tool and its modified source code are licensed under the [GNU General Public License v3.0 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.en.html).
+This tool and its source code are licensed under the [GNU General Public License v3.0 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.en.html).
